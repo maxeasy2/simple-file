@@ -1,0 +1,30 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    networks:
+      - default-network
+    ports:
+      - "80:80"
+    volumes:
+      - ${DOCKER_HOME}/nginx/resource:/usr/share/nginx
+      - ${DOCKER_HOME}/nginx/conf.d:/etc/nginx/conf.d 
+      - ${DOCKER_HOME}/nginx/logs:/var/log/nginx
+    environment:
+      TZ: "Asia/Seoul"
+  simple-file-app:
+    user: ${USER_ID}
+    image: maxeasy2/simple-file:latest
+    container_name: simple-file
+    networks:
+     - default-network
+    ports:
+     - 8080:8080
+    volumes:
+      - ${DOCKER_HOME}/simple-file-app/logs:/webapp/logs
+      - ${DOCKER_HOME}/nginx/resource/html/file:/webapp/file
+    environment:
+      TZ: "Asia/Seoul"
+networks:
+  default-network:
