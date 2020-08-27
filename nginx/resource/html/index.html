@@ -1,55 +1,68 @@
-<!DOCTYPE html>
-<html>
+
+<!doctype html>
 <head>
-<title>Welcome to nginx!</title>
+<title>File Upload Progress Demo #2</title>
 <style>
-    body {
-        width: 35em;
-        margin: 0 auto;
-        font-family: Tahoma, Verdana, Arial, sans-serif;
-    }
-    div {text-align: center;}
+body { padding: 30px }
+form { display: block; margin: 20px auto; background: #eee; border-radius: 10px; padding: 15px }
+
+.progress { position:relative; width:400px; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
+.bar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
+.percent { position:absolute; display:inline-block; top:3px; left:48%; }
 </style>
-<script src="http://code.jquery.com/jquery-1.12.4.js"></script>
-<script type="text/javascript">
-    function ajaxFileUpload() {
-
-        var form = jQuery("#ajaxFrom")[0];
-        var formData = new FormData(form);
-
-        jQuery.ajax({
-              url : "/api/file/upload"
-            , type : "POST"
-            , processData : false
-            , contentType : false
-            , data : formData
-            , success:function(json) {
-                alert("업로드 완료");
-            }
-        });
-    }
-</script>
 </head>
 <body>
-<h1>Welcome to nginx!</h1>
-<p>If you see this page, the nginx web server is successfully installed and
-working. Further configuration is required.</p>
-
-<p>For online documentation and support please refer to
-<a href="http://nginx.org/">nginx.org</a>.<br/>
-Commercial support is available at
-<a href="http://nginx.com/">nginx.com</a>.</p>
-
-<p><em>Thank you for using nginx.</em></p>
-<div>--------------------------------------------------------------------------</div>
-<div>
-    <form enctype="multipart/form-data" id="ajaxFrom" method="post">
-        파일그룹 : <input type="text" name="group"/><br/> 
-        <input type="file" multiple="true" name="files" id="ajaxFile"/>
-        <input type="button" onClick="ajaxFileUpload();" value="업로드"/>
+    <h1>Simple File Upload</h1>
+    <form action="/api/file/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="files" multiple><br>
+        <input type="submit" value="Upload File to Server">
     </form>
-</div>
-<br/><br/>
-<div><a href="/file">파일목록</a></div>
-</body>
-</html>
+    
+    <div class="progress">
+        <div class="bar"></div >
+        <div class="percent">0%</div >
+    </div>
+    
+    <div id="status"></div><br><br>
+    <div><a href="/file">파일목록</a></div>
+    
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<script>
+(function() {
+    
+var bar = $('.bar');
+var percent = $('.percent');
+var status = $('#status');
+   
+$('form').ajaxForm({
+    beforeSend: function() {
+        status.empty();
+        var percentVal = '0%';
+        bar.width(percentVal)
+        percent.html(percentVal);
+    },
+    uploadProgress: function(event, position, total, percentComplete) {
+        var percentVal = percentComplete + '%';
+        bar.width(percentVal)
+        percent.html(percentVal);
+		//console.log(percentVal, position, total);
+    },
+    success: function() {
+        var percentVal = '100%';
+        bar.width(percentVal)
+        percent.html(percentVal);
+    },
+	complete: function(xhr) {
+		status.html(xhr.responseText);
+	}
+}); 
+
+})();       
+</script>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">
+_uacct = "UA-850242-2";
+urchinTracker();
+</script>
+
