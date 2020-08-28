@@ -19,8 +19,6 @@ services:
     container_name: simple-file
     networks:
      - default-network
-    ports:
-     - 8080:8080
     volumes:
       - ${DOCKER_HOME}/simple-file-app/logs:/webapp/logs
       - ${DOCKER_HOME}/nginx/resource/html/file:/webapp/file
