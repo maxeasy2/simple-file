@@ -14,7 +14,7 @@ start.sh
 stop.sh
 ```
   
-#### 포트가 겹치는 경우 docker-compose.yml의 ***'ports'*** 항목을 수정하십시오
+#### 서버에서 사용하는 포트(80)가 겹치는 경우 docker-compose.yml의 ***'ports'*** 항목을 수정하십시오
 ```
 services:
   nginx:
