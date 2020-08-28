@@ -1,7 +1,9 @@
 # Simple-file
 
-Nginx + Spring Boot 기반의 심플한 파일서버 툴 입니다.   
+docker(Nginx + Spring Boot) 기반의 심플한 파일서버 툴 입니다.   
 복잡한 기능은 없고 단순히 파일 업로드(multipart)와 파일 목록을 Nginx *autoindex*를 통하여 보여줍니다 
+
+> ***본 어플리케이션은 docker, docker-compose 필요합니다***
 
 #### 아래 스크립트를 통하여 docker-compose를 수행/종료 하십시오
 
