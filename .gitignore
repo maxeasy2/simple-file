@@ -1,1 +1,3 @@
-*.log
+simple-file-app/logs/
+nginx/logs/
+nginx/resource/file/
