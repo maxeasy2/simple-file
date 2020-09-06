@@ -26,8 +26,8 @@ form { display: block; margin: 20px auto; background: #eee; border-radius: 10px;
     <div id="status"></div><br><br>
     <div><a href="/file">파일목록</a>&nbsp&nbsp&nbsp<a href="#" id="deleteAll">파일 전체 삭제</a></div>
     
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
 <script>
 (function() {
     
@@ -60,13 +60,15 @@ $('form').ajaxForm({
 
 $("#deleteAll").click(function(e){
     e.preventDefault();
-    $.ajax({
-        url: "/api/file",
-        type: 'DELETE',
-        success: function(result) {
-            alert("삭제 완료!");
-        }
-    });
+    if (confirm("삭제 하시겠습니까?")) {
+    	$.ajax({
+        	url: "/api/file",
+	        type: 'DELETE',
+        	success: function(result) {
+           		alert("삭제 완료!");
+        	}
+    	});
+    }
 });
 
 
